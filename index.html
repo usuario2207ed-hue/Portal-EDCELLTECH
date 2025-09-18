@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDCELL TECH - Portal</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #000010, #000000 80%);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    color: #fff;
+  }
+
+  /* Fundo de estrelas */
+  .stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+  }
+
+  @keyframes twinkle { 0%,100%{opacity:0.2;} 50%{opacity:1;} }
+
+  /* Cometas */
+  .comet {
+    position: absolute;
+    width: 150px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    opacity: 0.8;
+    transform: rotate(45deg);
+    animation: cometAnim 3s linear;
+  }
+
+  @keyframes cometAnim { 0%{transform:translateX(-200px) translateY(-200px) rotate(45deg);opacity:1;} 100%{transform:translateX(120vw) translateY(120vh) rotate(45deg);opacity:0;} }
+
+  /* Wormhole */
+  .wormhole { position: relative; width: 400px; height: 400px; display: flex; justify-content: center; align-items: center; z-index: 1; }
+  .circle { position: absolute; border-radius: 50%; border:2px solid #00ccff; opacity:0.7; animation: wormhole 6s infinite; }
+  .circle:nth-child(1){width:80px;height:80px;animation-delay:0s;}
+  .circle:nth-child(2){width:140px;height:140px;animation-delay:0.8s;}
+  .circle:nth-child(3){width:200px;height:200px;animation-delay:1.6s;}
+  .circle:nth-child(4){width:260px;height:260px;animation-delay:2.4s;}
+  .circle:nth-child(5){width:320px;height:320px;animation-delay:3.2s;}
+
+  @keyframes wormhole {0%{transform:scale(1);opacity:0.7;}100%{transform:scale(0.1);opacity:0;}}
+
+  .content { position: relative; text-align: center; z-index:10; }
+  .content h1 { font-size:24px;margin-bottom:20px;text-shadow:0 0 10px #00ccff,0 0 30px #00ccff; }
+  .btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #00ccff;
+    color: #111;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    text-transform: uppercase;
+    box-shadow:0 0 15px #00ccff,0 0 40px #00ccff;
+    animation: pulse 1.5s infinite;
+    cursor: pointer;
+    position: relative;
+    z-index:10;
+  }
+  @keyframes pulse {0%{transform:scale(1);box-shadow:0 0 15px #00ccff,0 0 40px #00ccff;}50%{transform:scale(1.1);box-shadow:0 0 25px #00ccff,0 0 60px #00ccff;}100%{transform:scale(1);box-shadow:0 0 15px #00ccff,0 0 40px #00ccff;}}
+
+  /* Cursor simulado */
+  #fakeCursor {
+    width: 24px;
+    height: 36px;
+    background: url('data:image/svg+xml;utf8,<svg fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 2l20 10-10 2-2 10z"/></svg>') no-repeat center;
+    position: absolute;
+    left: 50%;
+    bottom: -50px;
+    z-index:20;
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+</style>
+</head>
+<body>
+
+<div class="stars">
+  <div class="star" style="top:10%; left:20%; animation-delay:0s;"></div>
+  <div class="star" style="top:30%; left:70%; animation-delay:1s;"></div>
+  <div class="star" style="top:50%; left:40%; animation-delay:2s;"></div>
+  <div class="star" style="top:80%; left:60%; animation-delay:0.5s;"></div>
+  <div class="star" style="top:15%; left:85%; animation-delay:1.5s;"></div>
+  <div class="star" style="top:65%; left:10%; animation-delay:2.5s;"></div>
+  <div class="star" style="top:75%; left:50%; animation-delay:0.3s;"></div>
+  <div class="star" style="top:40%; left:90%; animation-delay:1.8s;"></div>
+  <div class="star" style="top:5%; left:55%; animation-delay:2.2s;"></div>
+  <div class="star" style="top:90%; left:25%; animation-delay:0.7s;"></div>
+</div>
+
+<div class="wormhole">
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="content">
+    <h1>Seja Bem-vindo à<br>EDCELL TECH</h1>
+    <a id="enterBtn" href="https://sites.google.com/edcelltech.com/edcell-tech/p%C3%A1gina-inicial" class="btn">Entrar</a>
+  </div>
+</div>
+
+<div id="fakeCursor"></div>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c99d2c1b57.mp3?filename=space-ambient-110997.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Cometas
+  function createComet() {
+    const comet = document.createElement("div");
+    comet.classList.add("comet");
+    comet.style.top = Math.random()*window.innerHeight+"px";
+    comet.style.left = "-200px";
+    document.body.appendChild(comet);
+    setTimeout(()=> comet.remove(),3000);
+  }
+  createComet();
+  setInterval(createComet,10000);
+
+  // Cursor animado
+  const cursor = document.getElementById("fakeCursor");
+  const btn = document.getElementById("enterBtn");
+
+  function animateCursorClick() {
+    const rect = btn.getBoundingClientRect();
+    const startX = window.innerWidth/2;
+    const startY = window.innerHeight + 50;
+    const endX = rect.left + rect.width/2;
+    const endY = rect.top + rect.height/2;
+
+    let t = 0;
+    const duration = 4000; // 4s para ir devagar
+    const fps = 60;
+    const step = 1/(duration/1000*fps);
+
+    const interval = setInterval(()=>{
+      t += step;
+      if(t >= 1){
+        clearInterval(interval);
+        // animação de clique
+        btn.style.transform = "scale(0.9)";
+        setTimeout(()=>{
+          btn.style.transform = "scale(1)";
+          btn.click(); // clique de verdade
+        },200);
+        return;
+      }
+      const x = startX + (endX-startX)*t;
+      const y = startY + (endY-startY)*t;
+      cursor.style.left = x+"px";
+      cursor.style.top = y+"px";
+    },1000/fps);
+  }
+
+  setTimeout(animateCursorClick,2000); // espera 2s antes de iniciar
+</script>
+
+</body>
+</html>
